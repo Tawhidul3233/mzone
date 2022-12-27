@@ -8,9 +8,9 @@ import TopPost from '../TopPost/TopPost';
 const Home = () => {
      return (
           <div>
-               <Navbar> </Navbar>
 
-               <div className=' grid grid-cols-1 md:grid-cols-3 min-h-screen'>
+
+               <div className=' grid grid-cols-1 md:grid-cols-3 min-h-screen mt-6'>
                     <div className=' col-span-1'>
                          <CreatePost> </CreatePost>
                          <TopPost> </TopPost>
@@ -20,7 +20,7 @@ const Home = () => {
                     </div>
                </div>
 
-               <Footer> </Footer>
+
           </div>
      );
 };

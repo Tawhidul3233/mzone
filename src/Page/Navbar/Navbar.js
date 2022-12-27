@@ -1,6 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+
+     const navItems = <>
+          {<li> <Link to='/'> Home Page</Link></li>}
+          {<li> <Link to='/myposts'> My Posts</Link></li>}
+          {<li> <Link to='/aboutme'> About Me</Link></li>}
+          {<li> <Link to='/register'> Register</Link></li>}
+          {<li> <Link to='/login'> Login</Link></li>}
+          {<li> <Link to='/logout'> Log Out</Link></li>}
+          
+     </>
+
      return (
           <div>
                <div className="navbar bg-base-100">
@@ -10,9 +22,7 @@ const Navbar = () => {
                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
                               </label>
                               <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                                   <li><a href=' '>Home page</a></li>
-                                   <li><a href=' '>My Posts</a></li>
-                                   <li><a href=' '>About Me</a></li>
+                                   {navItems}
                               </ul>
                          </div>
                     </div>
