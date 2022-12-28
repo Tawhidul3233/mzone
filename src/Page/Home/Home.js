@@ -1,8 +1,6 @@
 import React from 'react';
+import Posts from '../../ManagePost/Posts/Posts';
 import CreatePost from '../CreatePost/CreatePost';
-import Footer from '../Footer/Footer';
-import Navbar from '../Navbar/Navbar';
-import Post from '../Post/Post';
 import TopPost from '../TopPost/TopPost';
 
 const Home = () => {
@@ -15,8 +13,8 @@ const Home = () => {
                          <CreatePost> </CreatePost>
                          <TopPost> </TopPost>
                     </div>
-                    <div className=' col-span-2'>
-                         <Post></Post>
+                    <div className=' col-span-2 h-screen overflow-scroll'>
+                         <Posts></Posts>
                     </div>
                </div>
 
