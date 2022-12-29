@@ -1,38 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BsHandThumbsUp } from "react-icons/bs";
 
-const Post = ({post}) => {
-     // console.log(post)
-     
+const Post = ({ post }) => {
+    
+
+     const [like , setLike] =useState(0)
+
+     const likecount =() => {
+         const doLike = like + 1;
+         setLike(doLike)
+     }
+
      return (
-          <div className='my-10 mx-2 sm:mx-10 border p-3'>
+          <div className='my-2 mx-1  sm:mx-10 border p-3  bg-white rounded-md 
+             '>
                <div className='flex'>
                     <div className='flex items-center mr-2'>
-                         <p>img</p>
+                         <img className=' w-8 h-8 sm:w-12 sm:h-12  rounded-3xl' src={post?.photoURL} alt="" />
                     </div>
                     <div className=' '>
-                         <p>Name : </p>
-                         <p className=' text-xs'> date or time</p>
+                         <p className=' text-sm sm:text-lg'> {post.displayName} </p>
+                         <p className=' text-xs'> {post?.postTime}</p>
                     </div>
                     <div className=' ml-auto'>
-                         
-                         <Link to='/postDetails' >details</Link>
+
+                         <Link className=' text-info' to= {`/posts/${post._id}`} >details</Link>
                     </div>
                </div>
                <div className='my-5'>
-                    <div>
+                    <div className='mb-2'>
                          <p> {post.postText} </p>
                     </div>
-                    <div>
-                         <p>img</p>
+                    <div className=' flex justify-center w-full '>
+                         <img className=' rounded-lg  ' src={post.postImg} alt="" />
                     </div>
                </div>
                <div className='flex justify-around my-5'>
                     <div>
-                         <button> like </button>
+                         <button onClick={likecount} className='flex text-center justify-center items-center text-info'> <BsHandThumbsUp className='mr-2 text-2xl' /> {like} Likes </button>
                     </div>
+                    {/* <div>
+                         <Link to={`/postDetails/:${post._id}`} > <input className='border px-2 py-1' type="text" name='' placeholder='Write a comment...' /> </Link>
+                    </div> */}
                     <div>
-                         <Link to='/postDetails'> <input className='border px-2 py-1' type="text" name='' placeholder='Write a comment...' /> </Link>
+                         <Link to={`/posts/${post._id}`} > 
+                              <button className='border-0 px-4 py-1 text-info'> Write a comment... </button>
+                          </Link>
                     </div>
                </div>
           </div>

@@ -19,7 +19,7 @@ const Navbar = () => {
      const navItems = <>
           <li> <Link to='/'> Home Page</Link></li>
           <li> <Link to='/myposts'> My Posts</Link></li>
-          <li> <Link to='/aboutme'> About Me</Link></li>
+          <li> <Link to='/about'> About Me</Link></li>
           {
                user?.uid ? <li> <Link onClick={handelLogout}> Log Out</Link></li>
                     :

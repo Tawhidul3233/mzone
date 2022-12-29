@@ -14,8 +14,10 @@ const Register = () => {
      const navigate = useNavigate()
 
      const { register, formState: { errors }, handleSubmit } = useForm();
+     
      const handelRegister = data => {
 
+          // register with email and password
           registerWithEmail(data.email, data.password)
                .then(result => {
                     const user = result.user
@@ -23,6 +25,7 @@ const Register = () => {
                     toast.success('User create successfully')
                     navigate('/')
 
+                    // uplode img imgbb and get link and sent data to firebase
                     const image = data.image[0]
                     const formData = new FormData();
                     formData.append('image', image)
@@ -37,11 +40,33 @@ const Register = () => {
                               setLoading(true)
                               const userInfo = {
                                    displayName: data.name,
-                                   photoURL:imgData.data.url
+                                   photoURL: imgData.data?.url
                               }
+                              // data update on firebase profile
                               updateUser(userInfo)
                                    .then(() => { })
                                    .catch(err => console.log(err))
+
+                              // user information sent to mongodb
+                              setLoading(true)
+                              const userDetails = {
+                                   email: data?.email,
+                                   displayName: data?.name,
+                                   photoURL: imgData.data?.url,
+
+                              }
+                              fetch('http://localhost:5000/users', {
+                                   method:'POST',
+                                   headers: {
+                                        'content-type':'application/json'
+                                   },
+                                   body: JSON.stringify(userDetails)
+                              })
+                              .then(res => res.json())
+                              .then(data => {
+                                   console.log(data)
+                              })
+                              .catch(err => console.log(err))
                          })
                          .catch(err => console.log(err))
 
@@ -94,7 +119,9 @@ const Register = () => {
                                    <span className="label-text">Your profile photo?</span>
                               </label>
 
-                              <input {...register("image")} type="file" className="file-input file-input-bordered file-input-info w-full " />
+                              <input {...register("image")} type="file" className="file-input file-input-bordered file-input-info w-full " required />
+
+                             
                          </div>
 
                          <input className='btn btn-info w-full mt-5' type="submit" value='Register' />

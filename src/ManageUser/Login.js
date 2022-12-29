@@ -36,10 +36,31 @@ const Login = () => {
      const handelGoogleLogin = () => {
           singInWithGoogle(provider)
                .then(result => {
+                    
                     const user = result.user;
-                    console.log(user)
-                    toast.success('Sing in successfully')
                     navigate(from, { replace: true })
+                    toast.success('Sing in successfully')
+                    
+                    
+
+                    const userInfo = {
+                         displayName: user?.displayName,
+                         email: user?.email,
+                         photoURL: user?.photoURL
+                    }
+
+                    fetch('http://localhost:5000/users', {
+                         method: 'POST',
+                         headers: {
+                              'content-type': 'application/json'
+                         },
+                         body: JSON.stringify(userInfo)
+                    })
+                         .then(res => res.json())
+                         .then(data => {
+                              console.log(data)
+                         })
+                         .catch(err => console.log(err))
                })
                .catch(err => console.log(err))
      }

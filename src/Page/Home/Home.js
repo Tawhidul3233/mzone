@@ -13,7 +13,7 @@ const Home = () => {
                          <CreatePost> </CreatePost>
                          <TopPost> </TopPost>
                     </div>
-                    <div className=' col-span-2 h-screen overflow-scroll'>
+                    <div className=' col-span-2 md:h-screen md:overflow-scroll'>
                          <Posts></Posts>
                     </div>
                </div>
