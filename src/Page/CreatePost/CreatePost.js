@@ -70,12 +70,12 @@ const CreatePost = () => {
                     <div className='flex justify-around mt-3'>
                          <img className=' w-12 h-12  rounded-3xl' src={user?.photoURL} alt="" />
 
-                         <textarea {...register('postText')}  id="" className=' w-3/4 border p-1 bg-base-200 border-info' placeholder='Whats in your mind? '></textarea>
+                         <textarea {...register('postText')}  id="" className=' w-3/4 border p-1 bg-base-200 border-info rounded-sm' placeholder='Whats in your mind? '></textarea>
                     </div>
 
                     <div className=' flex w-4/5  ml-auto  my-2'>
                          <div className=' mx-3 '>
-                              <label htmlFor="postImg" className=' w-12 sm:w-20 border p-1 sm:px-2 sm:py-1 text-xs sm:text-base flex items-center border-info'>img + </label>
+                              <label htmlFor="postImg" className=' w-12 sm:w-20 border p-1 sm:px-2 sm:py-1 text-xs sm:text-base flex items-center border-info rounded-md '>img + </label>
                               <input {...register('image')} type="file" id='postImg' className="file-input file-input-bordered file-input-info hidden " />
                          </div>
 

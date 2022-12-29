@@ -9,7 +9,7 @@ const PostDetails = () => {
      const { user, setLoading } = useContext(AuthContext);
      const post = useLoaderData();
 
-     const {register, handleSubmit, reset } = useForm()
+     const { register, handleSubmit, reset } = useForm()
 
      const [like, setLike] = useState(0)
      const likecount = () => {
@@ -18,8 +18,8 @@ const PostDetails = () => {
      }
 
 
-     const commentSubmit = (data)=>{
-          console.log(data.comment)
+     const commentSubmit = (data) => {
+
           const commentInfo = {
                displayName: user?.displayName,
                email: user?.email,
@@ -30,36 +30,38 @@ const PostDetails = () => {
           }
           reset()
 
-          fetch('http://localhost:5000/comment',{
-               method:"POST",
-               headers:{
-                    'content-type':'application/json'
+          fetch('http://localhost:5000/comment', {
+               method: "POST",
+               headers: {
+                    'content-type': 'application/json'
                },
                body: JSON.stringify(commentInfo)
           })
-          .then(res => res.json())
-          .then(data => {
-               console.log(data)
-          })
-          .catch(err => console.log(err))
+               .then(res => res.json())
+               .then(data => {
+                    console.log(data)
+               })
+               .catch(err => console.log(err))
      }
 
 
+     const [comments, setComments] = useState([])
      
-
-     useEffect(()=>{
+     useEffect(() => {
           fetch('http://localhost:5000/comment')
-          .then(res => res.json())
-          .then(data => {
+               .then(res => res.json())
+               .then(data => {
+                    setComments(data)
+               })
+     }, [comments])
 
-          })
-     },[])
-
+     // how many comment each post 
+     const eachPostComment = comments.filter( com => com.id === post._id)
 
 
      return (
-          <div>
-               <div className='my-2 mx-1  sm:mx-10 border p-3  bg-white rounded-md 
+          <div className=' '>
+               <div className=' bg-white  my-2 mx-1  sm:mx-10 border p-3   rounded-md 
              '>
                     <div className='flex'>
                          <div className='flex items-center mr-2'>
@@ -79,20 +81,43 @@ const PostDetails = () => {
                          </div>
                     </div>
                     <div className='flex my-5'>
-                         <div className=' w-1/4'>
+                         <div className=' '>
                               <button onClick={likecount} className='flex text-center justify-center items-center text-info'> <BsHandThumbsUp className='mr-2 text-2xl' /> {like} Likes </button>
                          </div>
-                         <div>
-                              <p className='text-info'>Comments</p>
+                         <div className='ml-2 sm:ml-5'>
+                              <p className='text-info'>{eachPostComment.length} Comments</p>
                          </div>
                     </div>
                     <form onSubmit={handleSubmit(commentSubmit)}>
                          <div className=' mt-4  '>
-                              <textarea {...register('comment')} className=" border border-info w-3/6 rounded-md p-2" placeholder="Write a comment..."></textarea>
+                              <textarea {...register('comment')} className=" border border-info w-full sm:w-9/12 rounded-md p-2" placeholder="Write a comment..."></textarea>
                          </div>
                          <button className='btn btn-xs sm:btn-sm lg:btn-md btn-info'>Post</button>
                     </form>
+
+                    <div className='mt-10'>
+                         {
+                              comments.slice().reverse().map(com => <div key={com?._id}
+                                   className='my-4'
+                              >
+                                   { 
+                                        com.id === post._id  &&
+                                        <div className=' flex'>
+                                        <div>
+                                             <img className=' w-12 rounded-full' src={com?.photoURL} alt="" />
+                                        </div>
+                                        <div className=' bg-base-200 p-3 rounded-md ml-2 w-5/6 sm:w-2/3'>
+                                             <h2 className=' text-md sm:text-xl font-semibold'> {com?.displayName} </h2>
+                                             <p className=' text-sm sm:text-base'> {com?.comment} </p>
+                                             <p className=' text-xs mt-1 font-light'> {com?.commentTime.slice(4, 24)} </p>
+                                        </div>
+                                   </div>
+                                   }
+                              </div>)
+                         }
+                    </div>
                </div>
+
           </div>
      );
 };
