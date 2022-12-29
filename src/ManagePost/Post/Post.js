@@ -5,7 +5,7 @@ const Post = ({post}) => {
      // console.log(post)
      
      return (
-          <div className='my-10 mx-10 border p-3'>
+          <div className='my-10 mx-2 sm:mx-10 border p-3'>
                <div className='flex'>
                     <div className='flex items-center mr-2'>
                          <p>img</p>
