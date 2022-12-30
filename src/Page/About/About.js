@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
+import AboutModal from './AboutModal';
 
 const About = () => {
 
@@ -28,7 +29,10 @@ const About = () => {
                <div className=' w-full sm:w-4/5 md:w-3/5 lg:w-2/5 mx-auto my-10 border-2 border-info py-5 '>
                     <form>
                          <div className="flex justify-end mx-5   ">
-                              <button className='border px-2 py-1'>Edit</button>
+                              <label htmlFor="my-modal-3" className='border px-2 py-1'>Edit</label>
+                              <AboutModal 
+                              userInfo={userInfo}
+                              > </AboutModal>
                          </div>
                          <div className="form-control w-full  ">
                               <input {...register("name")} defaultValue={userInfo?.displayName} disabled type="text" placeholder='Full name' className="input input-bordered input-info w-full " />
