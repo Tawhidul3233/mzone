@@ -25,7 +25,7 @@ const About = () => {
 
      return (
           <div className='' >
-               <div className=' w-4/5 md:w-3/5 lg:w-2/5 mx-auto my-10 border-2 border-info py-5 '>
+               <div className=' w-full sm:w-4/5 md:w-3/5 lg:w-2/5 mx-auto my-10 border-2 border-info py-5 '>
                     <form>
                          <div className="flex justify-end mx-5   ">
                               <button className='border px-2 py-1'>Edit</button>

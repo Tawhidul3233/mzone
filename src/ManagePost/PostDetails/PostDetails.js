@@ -9,13 +9,51 @@ const PostDetails = () => {
      const { user, setLoading } = useContext(AuthContext);
      const post = useLoaderData();
 
+     const navigate = useNavigate()
+
      const { register, handleSubmit, reset } = useForm()
 
-     const [like, setLike] = useState(0)
+     
+
      const likecount = () => {
-          const doLike = like + 1;
-          setLike(doLike)
+
+          if(!user){
+               return navigate('/login')
+          }
+          const likeInfo = {
+               displayName: user?.displayName,
+               email: user?.email,
+               photoURL: user?.photoURL,
+               id: post._id
+          }
+
+          fetch('http://localhost:5000/like',{
+               method:"POST",
+               headers:{
+                    'content-type':'application/json'
+               },
+               body:JSON.stringify(likeInfo)
+          })
+          .then(res => res.json())
+          .then(data => {
+               console.log(data)
+          })
+          .catch(err => console.log(err))
+
      }
+
+     const [like, setLike] = useState([])
+     useEffect(()=>{
+          fetch('http://localhost:5000/like')
+          .then(res => res.json())
+          .then(data => {
+               console.log()
+               setLike(data)
+          })
+     },[like])
+
+     const eachPostLike = like.filter(l => l.id === post._id)
+
 
 
      const commentSubmit = (data) => {
@@ -69,7 +107,7 @@ const PostDetails = () => {
                          </div>
                          <div className=' '>
                               <p className=' text-sm sm:text-lg'> {post.displayName} </p>
-                              <p className=' text-xs'> {post?.postTime}</p>
+                              <p className=' text-xs'> {post?.postTime.slice(0, 33)}</p>
                          </div>
                     </div>
                     <div className='my-5'>
@@ -82,7 +120,7 @@ const PostDetails = () => {
                     </div>
                     <div className='flex my-5'>
                          <div className=' '>
-                              <button onClick={likecount} className='flex text-center justify-center items-center text-info'> <BsHandThumbsUp className='mr-2 text-2xl' /> {like} Likes </button>
+                              <button onClick={likecount} className='flex text-center justify-center items-center text-info'> <BsHandThumbsUp className='mr-2 text-2xl' /> {eachPostLike.length} Likes </button>
                          </div>
                          <div className='ml-2 sm:ml-5'>
                               <p className='text-info'>{eachPostComment.length} Comments</p>
@@ -109,7 +147,7 @@ const PostDetails = () => {
                                         <div className=' bg-base-200 p-3 rounded-md ml-2 w-5/6 sm:w-2/3'>
                                              <h2 className=' text-md sm:text-xl font-semibold'> {com?.displayName} </h2>
                                              <p className=' text-sm sm:text-base'> {com?.comment} </p>
-                                             <p className=' text-xs mt-1 font-light'> {com?.commentTime.slice(4, 24)} </p>
+                                             <p className=' text-xs mt-1 font-light'> {com?.commentTime?.slice(4, 24)} </p>
                                         </div>
                                    </div>
                                    }
