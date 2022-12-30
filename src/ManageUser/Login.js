@@ -20,7 +20,6 @@ const Login = () => {
           loginWithEmail(data.email, data.password)
                .then(result => {
                     const user = result.user;
-                    console.log(user)
                     toast.success('Sing in successfully')
                     navigate(from, { replace: true })
                })
@@ -49,7 +48,7 @@ const Login = () => {
                          photoURL: user?.photoURL
                     }
 
-                    fetch('http://localhost:5000/users', {
+                    fetch('https://mzone-server.vercel.app/users', {
                          method: 'POST',
                          headers: {
                               'content-type': 'application/json'
@@ -58,7 +57,6 @@ const Login = () => {
                     })
                          .then(res => res.json())
                          .then(data => {
-                              console.log(data)
                          })
                          .catch(err => console.log(err))
                })

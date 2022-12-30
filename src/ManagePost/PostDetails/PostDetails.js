@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { set, useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 import { BsHandThumbsUp } from 'react-icons/bs';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
@@ -8,15 +9,10 @@ const PostDetails = () => {
 
      const { user, setLoading } = useContext(AuthContext);
      const post = useLoaderData();
-
      const navigate = useNavigate()
-
      const { register, handleSubmit, reset } = useForm()
 
-     
-
      const likecount = () => {
-
           if(!user){
                return navigate('/login')
           }
@@ -27,7 +23,25 @@ const PostDetails = () => {
                id: post._id
           }
 
-          fetch('http://localhost:5000/like',{
+          const updateLikeToPostDoc = {
+               like : eachPostLike.length + 1,
+          }
+          // update post like amount on each post
+          fetch(`https://mzone-server.vercel.app/posts/${post._id}`, {
+               method: 'PUT',
+               headers: {
+                    'content-type': 'application/json'
+               },
+               body: JSON.stringify(updateLikeToPostDoc)
+          })
+               .then(res => res.json())
+               .then(data => {
+                    
+               })
+               .catch(err => console.log(err))
+
+               // post like
+          fetch('https://mzone-server.vercel.app/like',{
                method:"POST",
                headers:{
                     'content-type':'application/json'
@@ -36,28 +50,26 @@ const PostDetails = () => {
           })
           .then(res => res.json())
           .then(data => {
-               console.log(data)
+               toast.success('Liked')
           })
           .catch(err => console.log(err))
 
      }
 
+     // get like
      const [like, setLike] = useState([])
      useEffect(()=>{
-          fetch('http://localhost:5000/like')
+          fetch('https://mzone-server.vercel.app/like')
           .then(res => res.json())
           .then(data => {
-               console.log()
+               
                setLike(data)
           })
      },[like])
-
      const eachPostLike = like.filter(l => l.id === post._id)
 
 
-
      const commentSubmit = (data) => {
-
           const commentInfo = {
                displayName: user?.displayName,
                email: user?.email,
@@ -68,7 +80,28 @@ const PostDetails = () => {
           }
           reset()
 
-          fetch('http://localhost:5000/comment', {
+
+          const updateCommentToPostDoc = {
+               comment : eachPostComment.length + 1
+          }
+          // update post like amount on each post
+          fetch(`https://mzone-server.vercel.app/comment/${post._id}`, {
+               method: 'PUT',
+               headers: {
+                    'content-type': 'application/json'
+               },
+               body: JSON.stringify(updateCommentToPostDoc)
+          })
+               .then(res => res.json())
+               .then(data => {
+                    
+               })
+               .catch(err => console.log(err))
+
+
+
+               // post comment 
+          fetch('https://mzone-server.vercel.app/comment', {
                method: "POST",
                headers: {
                     'content-type': 'application/json'
@@ -77,22 +110,21 @@ const PostDetails = () => {
           })
                .then(res => res.json())
                .then(data => {
-                    console.log(data)
+                    toast.success('Comment added')
                })
                .catch(err => console.log(err))
      }
 
 
+     // get comment 
      const [comments, setComments] = useState([])
-     
      useEffect(() => {
-          fetch('http://localhost:5000/comment')
+          fetch('https://mzone-server.vercel.app/comment')
                .then(res => res.json())
                .then(data => {
                     setComments(data)
                })
      }, [comments])
-
      // how many comment each post 
      const eachPostComment = comments.filter( com => com.id === post._id)
 

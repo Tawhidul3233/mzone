@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
 
@@ -41,7 +42,7 @@ const CreatePost = () => {
 
                     reset()
 
-                    fetch('http://localhost:5000/posts', {
+                    fetch('https://mzone-server.vercel.app/posts', {
                          method: 'POST',
                          headers: {
                               'content-type': 'application/json'
@@ -49,7 +50,10 @@ const CreatePost = () => {
                          body: JSON.stringify(postWords)
                     })
                          .then(res => res.json())
-                         .then(data => console.log(data))
+                         .then(data => {
+                              
+                              toast.success('Post successfull')
+                         })
                          .catch(error => {
                               console.log(error)
                          })

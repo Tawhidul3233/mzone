@@ -21,7 +21,7 @@ const Register = () => {
           registerWithEmail(data.email, data.password)
                .then(result => {
                     const user = result.user
-                    console.log(user)
+                    
                     toast.success('User create successfully')
                     navigate('/')
 
@@ -55,7 +55,7 @@ const Register = () => {
                                    photoURL: imgData.data?.url,
 
                               }
-                              fetch('http://localhost:5000/users', {
+                              fetch('https://mzone-server.vercel.app/users', {
                                    method:'POST',
                                    headers: {
                                         'content-type':'application/json'
@@ -64,7 +64,7 @@ const Register = () => {
                               })
                               .then(res => res.json())
                               .then(data => {
-                                   console.log(data)
+                                   
                               })
                               .catch(err => console.log(err))
                          })

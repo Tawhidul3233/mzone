@@ -28,7 +28,7 @@ export const routes = createBrowserRouter([
                     path:'/posts/:id',
                     element: <PrivateRouter> <PostDetails> </PostDetails></PrivateRouter>,
                     loader: ({params})=>{
-                         return fetch(`http://localhost:5000/posts/${params.id}`)
+                         return fetch(`https://mzone-server.vercel.app/posts/${params.id}`)
                     }
 
                },

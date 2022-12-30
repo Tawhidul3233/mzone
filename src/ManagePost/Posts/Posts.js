@@ -8,7 +8,7 @@ const Posts = () => {
 
      // console.log(posts)
      useEffect(() => {
-          fetch('http://localhost:5000/posts')
+          fetch('https://mzone-server.vercel.app/posts')
                .then(res => res.json())
                .then(data => setPosts(data))
      }, [posts])
